@@ -14,6 +14,7 @@ import (
 	"github.com/aler9/gortsplib/pkg/h264"
 	"github.com/asticode/go-astits"
 	"github.com/gin-gonic/gin"
+	"github.com/pion/rtp"
 	"github.com/stretchr/testify/require"
 
 	"github.com/aler9/rtsp-simple-server/internal/logger"
@@ -203,9 +204,9 @@ func TestClient(t *testing.T) {
 				func(*gortsplib.Track, *gortsplib.Track) error {
 					return nil
 				},
-				func(isVideo bool, byts []byte) {
+				func(isVideo bool, pkt *rtp.Packet) {
 					require.Equal(t, true, isVideo)
-					require.Equal(t, byte(0x05), byts[12])
+					require.Equal(t, []byte{0x05}, pkt.Payload)
 					close(packetRecv)
 				},
 				testClientParent{},

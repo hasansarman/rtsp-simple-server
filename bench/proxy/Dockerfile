@@ -7,6 +7,7 @@ RUN wget -O /video.mkv http://jell.yfish.us/media/jellyfish-10-mbps-hd-h264.mkv
 
 WORKDIR /s
 
+COPY gortsplib ./gortsplib
 COPY go.mod go.sum ./
 RUN go mod download
 

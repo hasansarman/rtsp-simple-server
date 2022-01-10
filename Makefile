@@ -49,6 +49,7 @@ ARG ARCH
 FROM $$ARCH/$(BASE_IMAGE)
 RUN apk add --no-cache make docker-cli gcc musl-dev
 WORKDIR /s
+COPY gortsplib ./gortsplib
 COPY go.mod go.sum ./
 RUN go mod download
 endef
@@ -108,6 +109,7 @@ define DOCKERFILE_RUN
 FROM $(BASE_IMAGE)
 RUN apk add --no-cache ffmpeg
 WORKDIR /s
+COPY gortsplib ./gortsplib
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . ./
